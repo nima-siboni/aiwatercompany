@@ -13,15 +13,13 @@ from datetime import datetime
 
 import anthropic
 
-from cluster import submit_gcmc_job  # talks to the scheduler, returns a job id string
+from cluster import submit_gcmc_job
 
-
-# the whole code is full of magic numbers!
 client = anthropic.Anthropic()
 MODEL = "claude-opus-5-5"
 DB_PATH = "materials.db"
 
-TOOLS = [ # In the tools definition dont we specify the shape of the output?
+TOOLS = [
     {
         "name": "query_materials",
         "description": (
@@ -31,7 +29,7 @@ TOOLS = [ # In the tools definition dont we specify the shape of the output?
         "input_schema": {
             "type": "object",
             "properties": {"sql": {"type": "string", "description": "SQL query to run"}},
-            "required": ["sql"], # [NIT] rename sql -> sql_query
+            "required": ["sql"],
         },
     },
     {
@@ -54,7 +52,7 @@ def system_prompt():
     return (
         "You are a materials-discovery assistant for the CO2 capture team. "
         "Use the tools to answer questions and queue simulations. "
-        f"Current time: {datetime.now().isoformat()}" # what the fuck is this?
+        f"Current time: {datetime.now().isoformat()}"
     )
 
 
@@ -65,12 +63,11 @@ def query_materials(sql):
     return json.dumps(rows)
 
 
-def submit_simulation(mof_id, temperature_k, pressure_bar): # [Minor] highly recommneded to have a dataclass or even better a pydantic model.
+def submit_simulation(mof_id, temperature_k, pressure_bar):
     for attempt in range(3):
         try:
-            return submit_gcmc_job(mof_id, temperature_k, pressure_bar, timeout=30) # [Blocker] this is not the signature of the submit job.
-        except TimeoutError: # [Major] in every cluster there is a queying system.
-            # [Major] Other errors are swallowed.
+            return submit_gcmc_job(mof_id, temperature_k, pressure_bar, timeout=30) 
+        except TimeoutError:
             time.sleep(2) 
     raise RuntimeError("cluster unavailable")
 
@@ -82,7 +79,7 @@ def execute_tool(name, tool_input):
         if name == "submit_simulation":
             return submit_simulation(**tool_input)
     except Exception:
-        return "[]" # [Major] Tool execution;s errors are swallowed. 
+        return "[]"
 
 
 def call_model(messages):
@@ -95,14 +92,13 @@ def call_model(messages):
                 tools=TOOLS,
                 messages=messages,
                 cache_control={"type": "ephemeral"},
-            ) # Multiple retries could lead to token limits per sec. or per min.
+            ) 
         except Exception as e:
             print(f"API error, retrying: {e}")
             time.sleep(1)
-    raise RuntimeError("model unavailable") # [Major] make the error message clear.
+    raise RuntimeError("model unavailable")
 
-
-def run_agent(question, messages=[]): # What will happen if we run this twice?
+def run_agent(question, messages=[]):
     messages.append({"role": "user", "content": question})
 
     while True:
@@ -120,7 +116,3 @@ def run_agent(question, messages=[]): # What will happen if we run this twice?
                 for block, fut in zip(tool_blocks, as_completed(futures))
             ] # What will happen if one of the tools fail?
         messages.append({"role": "user", "content": tool_results})
-# [Blocking] MEssages are never returned?! How do we get something out of this loop?
-# [Blocking] There is nothing to take care of resource management in this loop! What will happen when we get close to context limit?
-# [Blocking] the format of mof_id is not clear. The temperature and pressure units are not clear. All of this needs to be clarified in the description, and best would be to check the values before submitting to the tools. There is no point in running experiiments in -1K! ;)
-# The foramt of the output is alos not clear, for neither of the tools.

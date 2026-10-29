@@ -19,7 +19,7 @@ MODEL = "claude-opus-5-5"
 PLANNER_PROMPT = (
     "You are a MOF design expert. Given a design brief, propose candidate MOFs. "
     "Respond with a JSON list of objects with keys 'name' and 'rationale'."
-) # it is not clear what is name supposed to be.
+)
 WORKER_PROMPT = (
     "You evaluate a single MOF candidate. Using the predicted properties provided, "
     "give a score from 0 to 10 and a short justification."
@@ -52,11 +52,11 @@ async def evaluate_candidate(candidate, history):
 
 
 async def run_campaign(brief):
-    planner_history = [{"role": "user", "content": brief}] # [nit] a better name is designer
-    worker_history = [] # [nit] wrker is a very general concept, we can be way more specific.
+    planner_history = [{"role": "user", "content": brief}]
+    worker_history = []
     round_num = 0
 
-    while True: # [Blocker] unbounded while loop, might never end leading to waste of resources, why not limiting the campaign to some budgets (time, token, canidates, etc.)
+    while True:
         round_num += 1
         plan = ask(PLANNER_PROMPT, planner_history)
         planner_history.append({"role": "assistant", "content": plan})
@@ -64,7 +64,7 @@ async def run_campaign(brief):
 
         evaluations = await asyncio.gather(
             *(evaluate_candidate(c, worker_history) for c in candidates)
-        ) # would this setup allow allocating the resources to other candidates as time
+        )
 
         shortlist = sorted(evaluations, key=lambda e: e["evaluation"], reverse=True)[:5]
         summary = "\n".join(f"- {e['name']}: {e['evaluation'][:200]}" for e in shortlist)

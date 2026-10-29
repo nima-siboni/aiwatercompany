@@ -22,22 +22,21 @@ MATERIALS_API_KEY = os.environ["MATERIALS_API_KEY"]
 
 def fetch_url(url):
     """Download a paper or web page and return its text."""
-    resp = requests.get(url) # This is going to fail badly! I htink we cannot use a general fetch and expect a readable .text from it, lets say a pdf is returned where the pdf is not machine generated, it is just scan of a couple of pages.
+    resp = requests.get(url) 
     return resp.text
 
 
-def search_materials(query, max_results=20, **kwargs): # what happens to **kwargs?
+def search_materials(query, max_results=20, **kwargs):
     """Search the internal materials API."""
     resp = requests.get(
         f"{MATERIALS_API}?q={query}&limit={max_results}&api_key={MATERIALS_API_KEY}",
         timeout=10,
-    ) # no error handling?
+    )
     resp.raise_for_status()
     return resp.json()
 
 
-def read_file(path): # error handling is missing.
-    # also if the file does not exist it creates it? wht is the open mode?
+def read_file(path):
     with open(os.path.join(WORKSPACE, path)) as f:
         return f.read()
 

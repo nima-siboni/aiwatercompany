@@ -4,20 +4,22 @@ Master code review skills through structured practice. Prepare for a 45-minute s
 with two complementary training paths: full mock PRs and focused Python pattern drills.
 
 ```
-pr_mock/               full-length mock PRs, 45 min each
-  learn/               thirteen chapters with examples, plus agentic_review_checklist.md
-  01–04_*.py           Set A: ML and scientific code
-  05–08_*.py           Set B: agent code
-  09–12_*.py           Set C: ML potentials and simulation
-  13–16_*.py           Set D: the discovery loop, generative models and benchmarks
-  17–19_*.py           Set E: training at scale, model serving and data pipelines
-  20–22_*.py           Set F: LLM pipelines (retrieval, extraction, MCP)
-  answers/             one answer key per mock PR
-python_patterns/       30 short drills: ten Python design patterns × three levels
-  learn/               learning nuggets with examples, one file per pattern
-  exercises/           the drills (10, 20 or 35 min)
-  answers/             answer keys, reference fixes and a one-page cheat sheet per pattern
-  checks/              runnable checks that demonstrate every planted bug
+pr_mock/                    full-length mock PRs, 45 min each
+  exercises/                22 mock PR files (01_data_prep.py through 22_simulation_copilot.py)
+    01–04_*.py              Set A: ML and scientific code
+    05–08_*.py              Set B: agent code
+    09–12_*.py              Set C: ML potentials and simulation
+    13–16_*.py              Set D: the discovery loop, generative models and benchmarks
+    17–19_*.py              Set E: training at scale, model serving and data pipelines
+    20–22_*.py              Set F: LLM pipelines (retrieval, extraction, MCP)
+  answers/                  one answer key per mock PR
+  learn/                    thirteen chapters with examples, plus agentic_review_checklist.md
+
+python_patterns/            30 short drills: ten Python design patterns × three levels
+  exercises/                the drills (10, 20 or 35 min per pattern, three difficulty levels)
+  answers/                  answer keys, reference fixes and a one-page cheat sheet per pattern
+  checks/                   runnable checks that demonstrate every planted bug
+  learn/                    learning nuggets with examples, one file per pattern
 ```
 
 A good route: read `pr_mock/learn/1_review_method.md`, which applies to both folders. Then build
@@ -27,10 +29,10 @@ pick the ones closest to the role (see "Which sets for which role" below).
 
 ## Mock PRs (`pr_mock/`)
 
-Twenty-two mock "colleague PRs" in the style of ML-for-materials code, each with an answer key of
-the same name in `pr_mock/answers/`. Each one has roughly 10–15 planted issues of mixed severity,
-plus at least one thing that looks wrong but is fine (a red herring), so you also practise saying
-"this isn't worth blocking on".
+Twenty-two mock "colleague PRs" in the style of ML-for-materials code, each in `pr_mock/exercises/`
+with an answer key of the same name in `pr_mock/answers/`. Each one has roughly 10–15 planted 
+issues of mixed severity, plus at least one thing that looks wrong but is fine (a red herring), 
+so you also practise saying "this isn't worth blocking on".
 
 Sets C to F were built from web research into the bugs that real code in each area contains
 (library docs and issue trackers, papers, post-mortems). Every planted bug was reproduced by

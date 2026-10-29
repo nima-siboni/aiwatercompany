@@ -22,17 +22,56 @@ python_patterns/            30 short drills: ten Python design patterns × three
   learn/                    learning nuggets with examples, one file per pattern
 ```
 
-A good route: read `pr_mock/learn/1_review_method.md`, which applies to both folders. Then build
-speed on the drills, reading each pattern's nuggets first. Finish with the mock PRs as dress
-rehearsals, reading the matching chapter before each set. Sets C to F are more specialised:
-pick the ones closest to the role (see "Which sets for which role" below).
+## Quick start paths
+
+**For interview prep in 3 hours:** Read learning nuggets for concurrency, caching, context managers, and generators (~20 min). Then tackle those four L3 pattern drills under interview conditions (35 + 5 min each).
+
+**For thorough mastery (10 hours):** One pattern per sitting — nuggets, then L1 → L2 → L3. Finish with the 6 sets of mock PRs as dress rehearsals.
+
+**General route:** Start with `pr_mock/learn/1_review_method.md` (applies to both). Build speed on Python patterns first (30 total), reading each pattern's nuggets first. Then do mock PR sets matching your target role. Sets C to F are specialised—pick the ones closest to your role.
+
+## Python pattern drills (`python_patterns/`)
+
+Build pattern recognition with 30 short drills: **10 design patterns × 3 difficulty levels**. Each level takes 10, 20, or 35 minutes. Read the nuggets first to learn the pattern, then spot the planted bugs in the drills.
+
+### The 10 patterns covered
+
+| Pattern | Main skills | L1 (10 min) | L2 (20 min) | L3 (35 min) |
+|---------|---|---|---|---|
+| **01. Decorators** | Function wrapping, composability, state | Featuriser timing | Retry backoff | Surrogate client |
+| **02. Caching** | Cache keys, cache invalidation, staleness | Element lookup | Framework properties | Prediction cache |
+| **03. Context managers** | Resource setup/teardown, exception safety | DFT helpers | Results store | Simulation workspace |
+| **04. Generators** | Lazy evaluation, consumed-once semantics | Batched inference | Streaming dataset | GCMC ingest |
+| **05. Factory & registry** | Plugin systems, late binding, registration | Featuriser factory | Filter registry | Plugin engines |
+| **06. Strategy & template** | Polymorphism, composition vs inheritance | Acquisition functions | Relaxer base class | Energy fallback |
+| **07. Dataclasses** | Value objects, immutability, frozen state | GCMC conditions | Frozen structures | Campaign config |
+| **08. Observer & callbacks** | Event systems, loose coupling, handlers | Event bus | Training callbacks | Job pub/sub |
+| **09. Singletons & DI** | Shared state, testability, hidden dependencies | Settings object | Results DB | Prediction service |
+| **10. Concurrency** | Threads, locks, async/await, synchronisation | Parallel featurise | DFT queue | Async client |
+
+Each pattern has learning nuggets (`python_patterns/learn/`), a reference fix, and runnable pytest checks that validate every planted bug.
+
+### Which patterns for which role
+
+- **All roles:** Start with concurrency, caching, context managers, generators (core patterns).
+- **ML engineers:** Add dataclasses, observer, singleton/DI (state management).
+- **Backend/infrastructure:** Add factory/registry, strategy/template (plugin systems, extensibility).
+- **Full mastery:** Do all 10 patterns—they teach the same failure modes you'll see in real code.
 
 ## Mock PRs (`pr_mock/`)
 
-Twenty-two mock "colleague PRs" in the style of ML-for-materials code, each in `pr_mock/exercises/`
-with an answer key of the same name in `pr_mock/answers/`. Each one has roughly 10–15 planted 
-issues of mixed severity, plus at least one thing that looks wrong but is fine (a red herring), 
-so you also practise saying "this isn't worth blocking on".
+**22 full-length mock PRs** (45 min each) in the style of ML-for-materials code. Each is in `pr_mock/exercises/` 
+with an answer key in `pr_mock/answers/`. Each one has roughly 10–15 planted issues of mixed severity, 
+plus at least one red herring (code that looks wrong but is fine), so you practise saying 
+"this isn't worth blocking on".
+
+Organized into **6 specialized sets** covering different domains and skills:
+- **Set A:** ML and scientific code (data pipelines, PyTorch, numerical correctness)
+- **Set B:** Agentic systems (tool loops, security, multi-agent orchestration)  
+- **Set C:** ML potentials and simulation (domain-specific: forces, stresses, DFT)
+- **Set D:** Discovery loops and generative models (active learning, benchmarking)
+- **Set E:** Training at scale, model serving, data pipelines (DDP, FastAPI, databases)
+- **Set F:** LLM pipelines (RAG, batch processing, MCP servers)
 
 Sets C to F were built from web research into the bugs that real code in each area contains
 (library docs and issue trackers, papers, post-mortems). Every planted bug was reproduced by
@@ -128,7 +167,7 @@ Suggested order is 18 → 19 → 17. Read chapters 11 and 12 first.
 
 Suggested order is 21 → 20 → 22. Read chapter 13 first; chapter 6 covers the agent loop itself.
 
-### Which sets for which role
+### Which PR sets for which role
 
 AIWaterCompany is hiring for: generative models for crystals, force fields and
 simulation, ML platform and infrastructure, agents with Bayesian optimisation, and internal
@@ -139,15 +178,6 @@ product engineering. If you know which role the interview is for:
 - **ML platform or infrastructure:** Set E, then 04, 11, 12 and 19.
 - **Agents and closed-loop discovery:** Sets B and F, then 13.
 - **Product or backend engineering:** 18, 19, 20 and 04.
-
-## Python pattern drills (`python_patterns/`)
-
-30 shorter drills, three per Python design pattern: decorators, caching, context managers,
-generators, factory/registry, strategy/template method, dataclasses, observer, singleton/DI and
-concurrency. The three levels take 10, 20 and 35 minutes. Each pattern has learning nuggets in
-`python_patterns/learn/`, and each drill has an answer key, a reference fix and runnable checks
-that prove every planted bug. Use them to build pattern recognition first, then do the mock PRs
-above as dress rehearsals. Start with `python_patterns/README.md`.
 
 ## How to run a session
 

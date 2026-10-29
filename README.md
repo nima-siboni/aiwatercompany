@@ -17,6 +17,16 @@ pr_mock/                    full-length mock PRs, 45 min each
 
 python_patterns/            30 short drills: ten Python design patterns × three levels
   exercises/                the drills (10, 20 or 35 min per pattern, three difficulty levels)
+    01_decorators/          L1/L2/L3: function wrapping, composability, state management
+    02_caching/             L1/L2/L3: cache keys, invalidation, staleness
+    03_context_managers/    L1/L2/L3: resource setup/teardown, exception safety
+    04_generators/          L1/L2/L3: lazy evaluation, consumed-once semantics
+    05_factory_registry/    L1/L2/L3: plugin systems, late binding, registration
+    06_strategy_template/   L1/L2/L3: polymorphism, composition vs inheritance
+    07_dataclasses/         L1/L2/L3: value objects, immutability, frozen state
+    08_observer/            L1/L2/L3: event systems, loose coupling, handlers
+    09_singleton_di/        L1/L2/L3: shared state, testability, hidden dependencies
+    10_concurrency/         L1/L2/L3: threads, locks, async/await, synchronisation
   answers/                  answer keys, reference fixes and a one-page cheat sheet per pattern
   checks/                   runnable checks that demonstrate every planted bug
   learn/                    learning nuggets with examples, one file per pattern
